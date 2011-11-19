@@ -93,7 +93,7 @@ If process A calls ``exit()``, then MM will do the following:
       + send INIT a message to unblock it
       + release B's ``proc_table[]`` slot
 
-If process P calls ``wait()``, then MM will do the following in this routine:
+If process P calls ``wait()``, then MM will do the following:
 
 1. iterate ``proc_table[]``, if proc A is found as P's child and it is ``HANGING``
 
@@ -108,31 +108,30 @@ If process P calls ``wait()``, then MM will do the following in this routine:
 
    - reply to P with error
 
-TERMs:
-    - ``HANGING``: everything except the ``proc_table`` entry has been cleaned up.
-    - ``WAITING``: a process has at least one child, and it is waiting for the child(ren) to ``exit()``
+Glossary:
+
+- ``HANGING``: everything except the ``proc_table`` entry has been cleaned up
+- ``WAITING``: a process has at least one child, and it is waiting for the child(ren) to ``exit()``
 
 See ``b/`` for details.
 
 exec
 ''''
 
-Once we implement ``exec()``, we can write programs for our OS.
-The figure below is the result of a ``fork()`` followed by ``execl("/echo", "echo", "hello", "world", 0)``.
-Calling ``execl("/echo", "echo", "hello", "world", 0)`` is just the same as execute ``echo hello world`` in a shell, except we have no shell yet.
+Once we implement ``exec()``, we can write programs for our OS (see ``c/`` and ``d/``).
+The snapshot below is the result of a ``fork()`` followed by an ``execl("/echo", "echo", "hello", "world", 0)``.
+Calling ``execl("/echo", "echo", "hello", "world", 0)`` is supposed to be the same as executing ``echo hello world`` in a shell, except that we have no shell yet.
 
 .. image:: http://osfromscratch.org/snapshots/original/%E5%9B%BE10.06%20echo.png
 
-We did *fork* and *exec* successfully and the "``hello world``" appears!
-
-See ``c/`` for more.
+The "``hello world``" appears. That means the *fork* and *exec* succeeded.
 
 shell
 '''''
 
 We didn't have a shell when we called ``execl()``, but we will soon.
 Armed with ``fork()`` and ``exec()``, it's easy to write a simple shell.
-Let's call it *shabby_shell*.
+Let's call it *shabby_shell* (see ``e/``).
 
 Look, *shabby_shell* is running:
 
